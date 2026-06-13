@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg15
+        env:
+          POSTGRES_USER: pulse
+          POSTGRES_DB: pulse
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pulse -d pulse"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      DATABASE_URL: postgresql+asyncpg://pulse@localhost:5432/pulse
+      DATABASE_SSL: "false"
+      GROQ_API_KEY: ""
+      GROQ_MODEL: llama-3.3-70b-versatile
+      GROQ_QUOTA_FILE: quota_state.json
+      API_KEY: test-api-key # pragma: allowlist secret
+      JOB_SECRET: test-job-secret # pragma: allowlist secret
+      RSS_FEEDS: https://example.com/feed.xml
+      GITHUB_TRENDING_URL: https://example.com/trending
+      GITHUB_SEARCH_URL: https://api.github.com/search/repositories
+      GITHUB_SEARCH_QUERY: topic:artificial-intelligence
+      GITHUB_USER_AGENT: pulse-ci
+      ARXIV_API_URL: https://export.arxiv.org/api/query
+      ARXIV_CATEGORIES: cs.AI
+      SCHEDULER_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+      - run: python -m pip install -e ".[dev]"
+      - run: alembic upgrade head
+      - run: pytest -m "not live"
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.13.0"
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test

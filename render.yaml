@@ -1,0 +1,83 @@
+services:
+  - type: web
+    name: pulse-api
+    rootDir: backend
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /status
+    autoDeployTrigger: commit
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL
+        value: "true"
+      - key: DATABASE_SSL_MODE
+        value: require
+      - key: DATABASE_POOL_SIZE
+        value: "3"
+      - key: DATABASE_MAX_OVERFLOW
+        value: "2"
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: GROQ_DAILY_LIMIT
+        value: "900"
+      - key: GROQ_REQUEST_DELAY_SECONDS
+        value: "2.1"
+      - key: GROQ_QUOTA_FILE
+        value: quota_state.json
+      - key: GROQ_QUOTA_BACKEND
+        value: database
+      - key: GMAIL_CLIENT_ID
+        sync: false
+      - key: GMAIL_CLIENT_SECRET
+        sync: false
+      - key: GMAIL_REFRESH_TOKEN
+        sync: false
+      - key: NEWSLETTER_SENDERS
+        value: thesequence.substack.com,deeplearning.ai,tldr.tech
+      - key: API_KEY
+        sync: false
+      - key: JOB_SECRET
+        sync: false
+      - key: LOG_LEVEL
+        value: INFO
+      - key: RSS_FEEDS
+        sync: false
+      - key: GITHUB_TRENDING_URL
+        sync: false
+      - key: GITHUB_SEARCH_URL
+        sync: false
+      - key: GITHUB_SEARCH_QUERY
+        sync: false
+      - key: GITHUB_USER_AGENT
+        sync: false
+      - key: ARXIV_API_URL
+        sync: false
+      - key: ARXIV_CATEGORIES
+        sync: false
+      - key: ARXIV_MAX_RESULTS
+        value: "40"
+      - key: ENRICHMENT_BATCH_SIZE
+        value: "10"
+      - key: SCHEDULER_TIMEZONE
+        value: Asia/Kolkata
+      - key: SCHEDULER_ENABLED
+        value: "false"
+      - key: EMBEDDING_PROVIDER
+        value: supabase
+      - key: EMBEDDING_API_URL
+        sync: false
+      - key: EMBEDDING_API_SECRET
+        sync: false
+      - key: EMBEDDING_REQUEST_TIMEOUT_SECONDS
+        value: "30"
+      - key: ARTICLE_RETENTION_DAYS
+        value: "180"
+      - key: SKIPPED_RETENTION_DAYS
+        value: "30"
+      - key: INGESTION_RUN_RETENTION_DAYS
+        value: "30"

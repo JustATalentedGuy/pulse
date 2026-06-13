@@ -1,0 +1,4 @@
+project_id = "pulse"
+
+[functions.embed]
+verify_jwt = false

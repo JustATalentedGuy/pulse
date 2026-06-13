@@ -1,0 +1,47 @@
+# Environment and credentials
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.production.example
+**/client_secret*.json
+**/credentials*.json
+**/*.pem
+**/*.key
+**/*.p8
+**/*.p12
+**/*.jks
+**/*.mobileprovision
+
+# Python
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/*.egg-info/
+**/.coverage
+**/htmlcov/
+
+# Node / Expo
+**/node_modules/
+**/.expo/
+**/dist/
+**/web-build/
+**/.metro-health-check*
+**/*.tsbuildinfo
+mobile/android/
+mobile/ios/
+
+# Local state and data
+**/quota_state.json
+**/quota_state.json.tmp
+**/*.dump
+**/backup-*.sql
+backend/supabase/.temp/
+
+# Tooling and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.claude/
+*.log

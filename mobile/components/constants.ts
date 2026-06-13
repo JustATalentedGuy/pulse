@@ -1,0 +1,1 @@
+export const ARTICLE_CARD_MIN_HEIGHT = 190;

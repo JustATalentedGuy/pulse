@@ -1,0 +1,36 @@
+name: Encrypted Supabase backup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 2 * * 0"
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump and encrypt database
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          BACKUP_PASSWORD: ${{ secrets.BACKUP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          docker run --rm postgres:17 pg_dump \
+            --no-owner \
+            --no-privileges \
+            "$SUPABASE_DB_URL" |
+            gzip |
+            openssl enc -aes-256-cbc -salt -pbkdf2 \
+              -pass env:BACKUP_PASSWORD \
+              -out "pulse-$(date -u +%Y-%m-%d).sql.gz.enc"
+
+      - name: Upload encrypted backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: pulse-supabase-${{ github.run_id }}
+          path: pulse-*.sql.gz.enc
+          retention-days: 30
+          if-no-files-found: error
