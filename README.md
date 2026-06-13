@@ -1,5 +1,8 @@
 # Pulse
 
+[![CI](https://github.com/JustATalentedGuy/pulse/actions/workflows/ci.yml/badge.svg)](https://github.com/JustATalentedGuy/pulse/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Pulse is a personal AI intelligence reader for engineers and researchers. It
 collects AI and software content from RSS, GitHub, arXiv, and Gmail
 newsletters, enriches each item with an LLM, and serves a personalized mobile
