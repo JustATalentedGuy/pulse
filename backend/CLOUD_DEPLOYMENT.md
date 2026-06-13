@@ -286,13 +286,22 @@ All embedded records should eventually report `gte-small`.
 
 ## 9. Configure Weekly Encrypted Backups
 
-In the private backend GitHub repository, add Actions secrets:
+In the GitHub repository settings, add Actions secrets:
 
 - `SUPABASE_DB_URL`: session pooler URI
 - `BACKUP_PASSWORD`: `$backupPassword`
 
 Open **Actions > Encrypted Supabase backup > Run workflow** once. Download the
 artifact and confirm it contains an `.sql.gz.enc` file.
+
+The public template is manual by default so unconfigured forks do not produce
+failed scheduled runs. After the manual backup succeeds, add this trigger to
+`.github/workflows/supabase-backup.yml` for weekly Sunday backups:
+
+```yaml
+  schedule:
+    - cron: "30 2 * * 0"
+```
 
 To decrypt:
 
