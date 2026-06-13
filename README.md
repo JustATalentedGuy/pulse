@@ -48,6 +48,16 @@ flowchart LR
 | Data | PostgreSQL, pgvector, Alembic |
 | Operations | Docker Compose, Render, Supabase, GitHub Actions, EAS |
 
+## Screenshots
+
+| Home Feed | Article View | Bookmark |
+|-----------|--------------|----------|
+| <img src="screenshots/home_feed.jpeg" width="250"> | <img src="screenshots/article_read.jpeg" width="250"> | <img src="screenshots/bookmark.jpeg" width="250"> |
+
+| Quiz | Quiz Answered | Ask Pulse |
+|------|---------------|-----------|
+| <img src="screenshots/quiz.jpeg" width="250"> | <img src="screenshots/quiz_answered.jpeg" width="250"> | <img src="screenshots/ask_pulse.jpeg" width="250"> |
+
 ## Repository Layout
 
 ```text
